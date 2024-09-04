@@ -1,0 +1,50 @@
+@startuml
+
+class Crawler {
++ url: Url
++ crawled_urls: dict
++ headers: dict
++ domain_filter: bool
++ max_runner: int
++ print_in_real_time: bool
++ max_retries: int
++ sleep_between_retries: float
++ max_depth: int
++ regex_search: bool
++ assume_parent_protocol: bool
++ sleep_after_request: int
++ concurrent_requests_limit: int
+- _queue: Queue
+- _session: ClientSession
+- _limit: Semaphore
++ crawl()
+
+}
+class Url {
++ string_url: str
++ protocol: str
++ domain: str
++ path: str
++ fragment: str
++ parent_protocol: str
++ parent_domain: str
++ parent_path: str
++ use_parent_protocol: bool
++ get_full_url()
++ get_basic_url()
++ is_valid()
++ is_crawlable()
++ default_regex()
+}
+class UrlSet {
+- items: dict
++ add()
++ keys()
++ values()
+}
+
+Crawler *-- Url
+Crawler ..> Url: <<use>>
+Crawler ..> UrlSet: <<use>>
+UrlSet "1..*" o-- "1..*" Url
+@enduml
